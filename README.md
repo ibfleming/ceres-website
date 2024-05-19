@@ -1,2 +1,1 @@
-# ceres
-New website design for Ceres Corporation.
+## Ceres Corp. Website Project 
