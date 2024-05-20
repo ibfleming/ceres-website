@@ -2,29 +2,56 @@
 
 import { useEffect, useRef } from 'react';
 import Globe from 'react-globe.gl';
-import * as THREE from 'three';
+import './Globe.css';
 
 const GlobeComponent = () => {
 	const globeEl = useRef();
 
 	useEffect(() => {
-		// Configure globe settings
-		globeEl.current.pointOfView({ altitude: 4 });
-		globeEl.current.controls().autoRotate = true;
-		globeEl.current.controls().autoRotateSpeed = 0.5;
+		const MAP_CENTER = { lat: 0, lng: 0, altitude: 4 };
+		globeEl.current.pointOfView(MAP_CENTER, 0);
 
-		// Set globe background color
-		globeEl.current.renderer().setClearColor(new THREE.Color(0x000000), 0);
+		const controls = globeEl.current.controls();
+		controls.enableRotate = false;
+		controls.autoRotate = true;
+		controls.autoRotateSpeed = 2;
+		controls.enableZoom = false;
+		controls.enablePan = false;
+	}, []);
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (globeEl.current) {
+				globeEl.current.width = window.innerWidth;
+				globeEl.current.height = window.innerHeight;
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+		handleResize();
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
 	}, []);
 
 	return (
-		<div className='w-full h-64'>
-			<Globe
-				ref={globeEl}
-				globeImageUrl='//unpkg.com/three-globe/example/img/earth-blue-marble.jpg'
-				bumpImageUrl='//unpkg.com/three-globe/example/img/earth-topology.png'
-				backgroundColor='rgba(0,0,0,0)'
-			/>
+		<div className='parent-wrapper'>
+			<div className='grid-container'>
+				<div className='globe-container'>
+					<Globe
+						ref={globeEl}
+						height={window.innerHeight}
+						width={window.innerWidth}
+						globeImageUrl='src/assets/earth-detail.jpg'
+						bumpImageUrl='src/assets/earth-topology.png'
+						backgroundColor='rgba(0,0,0,0)'
+						showAtmosphere={true}
+						//atmosphereColor='rgba(0, 0, 0, 0.5)'
+					/>
+				</div>
+				<h1 className='title'>CERES</h1>
+			</div>
 		</div>
 	);
 };
