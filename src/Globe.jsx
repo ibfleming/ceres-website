@@ -3,54 +3,53 @@
 import { useEffect, useRef } from 'react';
 import Globe from 'react-globe.gl';
 import './Globe.css';
+import '../src/styles/fonts.css';
 
 const GlobeComponent = () => {
 	const globeEl = useRef();
 
 	useEffect(() => {
-		const MAP_CENTER = { lat: 0, lng: 0, altitude: 4 };
+		const MAP_CENTER = { lat: 10, lng: 0, altitude: 4 };
 		globeEl.current.pointOfView(MAP_CENTER, 0);
 
 		const controls = globeEl.current.controls();
 		controls.enableRotate = false;
 		controls.autoRotate = true;
-		controls.autoRotateSpeed = 2;
+		controls.autoRotateSpeed = 0.5;
 		controls.enableZoom = false;
 		controls.enablePan = false;
 	}, []);
 
-	useEffect(() => {
-		const handleResize = () => {
-			if (globeEl.current) {
-				globeEl.current.width = window.innerWidth;
-				globeEl.current.height = window.innerHeight;
-			}
-		};
-
-		window.addEventListener('resize', handleResize);
-		handleResize();
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, []);
-
 	return (
-		<div className='parent-wrapper'>
-			<div className='grid-container'>
-				<div className='globe-container'>
-					<Globe
-						ref={globeEl}
-						height={window.innerHeight}
-						width={window.innerWidth}
-						globeImageUrl='src/assets/earth-detail.jpg'
-						bumpImageUrl='src/assets/earth-topology.png'
-						backgroundColor='rgba(0,0,0,0)'
-						showAtmosphere={true}
-						//atmosphereColor='rgba(0, 0, 0, 0.5)'
-					/>
+		<div className='parent-wrapper drop-shadow-xl'>
+			<div className='globe-container'>
+				<Globe
+					ref={globeEl}
+					globeImageUrl='src/assets/earth-detail.jpg'
+					bumpImageUrl='src/assets/earth-topology.png'
+					backgroundColor='rgba(0,0,0,0)'
+					showAtmosphere={false}
+					width={250}
+					height={500}
+					enableGlobeGlow={false}
+					enableBackground={false}
+					enableClouds={false}
+				/>
+			</div>
+			<div className='ml-3'>
+				<div className='flex items-end'>
+					<h1 className='font-sofachrome italic text-secondary text-5xl'>
+						CERES,
+					</h1>
+					<h1 className='font-sofachrome italic text-secondary text-2xl ml-3'>
+						Corp.
+					</h1>
 				</div>
-				<h1 className='title'>CERES</h1>
+				<div className='flex pl-2'>
+					<h1 className=' text-secondary text-xs mt-2 tracking-wide'>
+						Professional, Cost-effective Environmental Services
+					</h1>
+				</div>
 			</div>
 		</div>
 	);

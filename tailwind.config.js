@@ -7,6 +7,13 @@ export default {
 				milky: "url('src/assets/milkyway.jpg)",
 				stars: "url('src/assets/stars.jpg')",
 			},
+			fontFamily: {
+				sofachrome: ['Sofachrome', 'sans-serif'],
+			},
+			colors: {
+				primary: '#4b6b80',
+				secondary: '#cfdee7',
+			},
 		},
 	},
 	plugins: [],
