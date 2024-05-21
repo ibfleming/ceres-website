@@ -36,7 +36,7 @@ const GlobeComponent = () => {
 					enableClouds={false}
 				/>
 			</div>
-			<div className='ml-3'>
+			<div className='ml-5'>
 				<div className='flex items-end'>
 					<h1 className='font-sofachrome italic text-secondary text-5xl'>
 						CERES,
@@ -46,7 +46,7 @@ const GlobeComponent = () => {
 					</h1>
 				</div>
 				<div className='flex pl-2'>
-					<h1 className=' text-secondary text-xs mt-2 tracking-wide'>
+					<h1 className=' text-secondary text-sm mt-2 tracking-wide'>
 						Professional, Cost-effective Environmental Services
 					</h1>
 				</div>

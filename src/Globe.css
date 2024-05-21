@@ -17,6 +17,7 @@
 
 .globe-container {
 	width: fit-content;
+	min-width: 250px;
 	height: 100%;
 	overflow: hidden;
 	position: relative;
