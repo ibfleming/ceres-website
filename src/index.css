@@ -3,14 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
 	font-weight: 400;
 
 	color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #cfdee7; /*#242424*/
+	color: #4b6b80;
+	background-color: #cfdee7; /* #242424 */
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -18,46 +25,38 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-a {
-	font-weight: 300;
-	color: white;
-	text-decoration: inherit;
-}
-a:hover {
-	color: #4b6b80;
+.app-container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
-h1 {
-	font-size: 3.2em;
-	line-height: 1.1;
+.section-box-shadow {
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+		rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-button {
-	padding: 1em;
-	font-size: 1em;
-	font-family: inherit;
-	background-color: #4b6b80;
-	cursor: pointer;
-	/*transition: background-color 0.5s, color 0.5s;*/
+.section-bg-top {
+	background: rgb(1, 1, 1, 1);
+	background: linear-gradient(0, rgba(1, 1, 1, 1) 0%, #cfdee7 100%);
 }
-button:hover {
-	background-color: #cfdee7;
-	color: #4b6b80;
+
+.section-bg-bottom {
+	background: rgb(1, 1, 1, 1);
+	background: linear-gradient(-180deg, rgba(1, 1, 1, 1) 20%, #cfdee7 100%);
 }
-button:focus,
-button:focus-visible {
-	background-color: #cfdee7;
-	color: #4b6b80;
-	outline: none;
+
+.nav-animation {
+	transition: transform 0.25s ease-in-out;
 }
 
 @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
-		background-color: #ffffff;
+		background-color: #cfdee7;
 	}
 	a:hover {
-		color: #747bff;
+		color: black;
 	}
 	button {
 		background-color: #f9f9f9;

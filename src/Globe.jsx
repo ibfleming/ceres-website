@@ -3,15 +3,15 @@
 import { useEffect, useRef, useMemo, useCallback } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
-import './Globe.css';
+import '../src/styles/Globe.css';
 import '../src/styles/fonts.css';
 
 const World = () => {
 	const globeRef = useRef();
-
 	const MAP_CENTER = useMemo(() => ({ lat: 10, lng: 0, altitude: 2 }), []);
 
 	const initializeGlobe = useCallback(() => {
+		if (globeRef.current.initialized) return;
 		const globe = globeRef.current;
 		if (!globe) return;
 
@@ -19,7 +19,7 @@ const World = () => {
 		const controls = globe.controls();
 		controls.enableRotate = false;
 		controls.autoRotate = true;
-		controls.autoRotateSpeed = 0.33;
+		controls.autoRotateSpeed = 0.3;
 		controls.enableZoom = false;
 		controls.enablePan = false;
 
@@ -28,18 +28,16 @@ const World = () => {
 
 		// Renderer
 		const renderer = globe.renderer();
-		renderer.setClearColor(0x000000, 0);
-		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.outputEncoding = THREE.sRGBEncoding;
+		renderer.setPixelRatio(1);
 		renderer.shadowMap.enabled = false;
 		renderer.antialias = false;
 
 		// Clouds
 		const CLOUDS_IMG = '/src/assets/clouds.png';
 		const CLOUDS_ALT = 0.01;
-		const CLOUDS_ROTATION_SPEED = -0.005;
 
-		new THREE.TextureLoader().load(CLOUDS_IMG, (cloudsTexture) => {
+		const textureLoader = new THREE.TextureLoader();
+		textureLoader.load(CLOUDS_IMG, (cloudsTexture) => {
 			const cloudsMaterial = new THREE.MeshPhongMaterial({
 				map: cloudsTexture,
 				transparent: true,
@@ -48,17 +46,13 @@ const World = () => {
 			});
 			const cloudsGeometry = new THREE.SphereGeometry(
 				globe.getGlobeRadius() * (1 + CLOUDS_ALT),
-				75,
-				75
+				32,
+				32
 			);
 			const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
 			globe.scene().add(clouds);
-
-			(function rotateClouds() {
-				clouds.rotation.y += (CLOUDS_ROTATION_SPEED * Math.PI) / 180;
-				requestAnimationFrame(rotateClouds);
-			})();
 		});
+		globeRef.current.initialized = true;
 	}, [MAP_CENTER]);
 
 	useEffect(() => {
@@ -66,7 +60,7 @@ const World = () => {
 	}, [initializeGlobe]);
 
 	return (
-		<div className='parent-wrapper'>
+		<div className='logo'>
 			<div className='flex relative w-fit'>
 				<Globe
 					ref={globeRef}
@@ -81,10 +75,10 @@ const World = () => {
 					enableGlobeGlow={false}
 					enableBackground={false}
 					enableClouds={false}
-					animateIn={false}
+					animateIn={true}
 				/>
 			</div>
-			<div className='ml-3'>
+			<div className='ml-5'>
 				<div className='flex items-end'>
 					<h1 className='font-sofachrome italic text-secondary text-5xl'>
 						CERES,

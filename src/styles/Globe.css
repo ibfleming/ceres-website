@@ -1,0 +1,10 @@
+.logo {
+	width: 100%;
+	height: 256px;
+	background-image: url('src/assets/stars.jpg');
+	background-size: cover;
+	background-position: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
