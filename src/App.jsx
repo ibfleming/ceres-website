@@ -1,50 +1,88 @@
-import { useEffect, useState } from 'react';
-import Globe from './Globe';
-import Navigation from './Nav';
-import Footer from './Footer';
-import Home from './Home';
+import { useEffect, useState, useRef } from 'react';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
+import Globe from './components/Globe';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import Home from './components/Home';
+import Services from './components/Services';
+import Contact from './components/Contact';
 
-export default function App() {
-	const [scrollY, setScrollY] = useState(0);
+function App() {
+	const [yAxisValue, setScrollY] = useState(0);
+	const [currentView, setCurrentView] = useState('Home');
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const parentHeight = document.querySelector('#body').offsetHeight;
-			const navHeight = document.querySelector('nav').offsetHeight;
-			const maxScrollY = parentHeight - navHeight;
-			let newScrollY = window.scrollY;
-			if (newScrollY > maxScrollY) {
-				newScrollY = maxScrollY;
+			const parentHeight =
+				document.getElementById('nav-parent').clientHeight;
+			const navElement = document.getElementById('nav');
+			const navHeight = navElement.clientHeight;
+			if (parentHeight > navHeight + window.scrollY) {
+				navElement.classList.add('nav-animation');
+				setScrollY(window.scrollY);
 			}
-			setScrollY(newScrollY);
 		};
+
 		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
 	}, []);
+
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, [currentView]);
+
+	const nodeRef = useRef(null);
+
+	const renderView = () => {
+		switch (currentView) {
+			case 'Home':
+				return <Home />;
+			case 'Services':
+				return <Services />;
+			case 'Contact':
+				return <Contact />;
+			default:
+				return null;
+		}
+	};
 
 	return (
 		<div className='app-container'>
 			<section className='w-full h-8 bg-black'></section>
 			<Globe />
-			<section className='w-full h-16 section-bg-bottom'></section>
-			<div className='flex items-center justify-center flex-1 w-full bg-secondary my-12'>
-				<div id='body' className='flex w-4/6 mx-auto'>
+			<section className='w-full h-16 spacer-gradient-bottom'></section>
+			<div
+				id='nav-parent'
+				className='flex items-center justify-center flex-1 w-full bg-secondary my-12'
+			>
+				<div className='flex w-4/6 mx-auto h-max overflow-visible'>
 					<nav
-						className='flex-row w-fit items-start justify-start h-fit p-16 nav-animation'
+						id='nav'
+						className='flex-row w-fit h-full max-h-screen items-start justify-start p-16'
 						style={{
-							transform: `translateY(${scrollY}px)`,
-							position: `sticky`,
-							top: `0`,
+							transform: `translateY(${yAxisValue}px)`,
 						}}
 					>
-						<Navigation />
+						<Navigation setCurrentView={setCurrentView} />
 					</nav>
-					<Home />
-					{/* Implement section routing here... */}
+					<SwitchTransition>
+						<CSSTransition
+							nodeRef={nodeRef}
+							key={currentView}
+							timeout={500}
+							classNames='fade'
+							unmountOnExit
+						>
+							<div ref={nodeRef}>{renderView()}</div>
+						</CSSTransition>
+					</SwitchTransition>
 				</div>
 			</div>
-			<section className='w-full h-16 section-bg-top'></section>
 			<Footer />
 		</div>
 	);
 }
+
+export default App;

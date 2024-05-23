@@ -1,3 +1,5 @@
+import aerialImage from '../assets/imgs/aerial.jpg';
+
 export default function Services() {
 	return (
 		<div className='w-full h-full border-l-2 border-primary p-16'>
@@ -80,7 +82,7 @@ export default function Services() {
 			<div className='mx-auto mt-8 w-[256px]'>
 				<img
 					className='border-2 border-primary rounded-sm shadow-md'
-					src='../src/assets/aerial.jpg'
+					src={aerialImage}
 					alt='Aerial Example Photo'
 				/>
 				<span className='text-[12px]'>Historical Aerial Photo Example</span>
