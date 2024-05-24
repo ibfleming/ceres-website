@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import Globe from 'react-globe.gl';
 import * as THREE from 'three';
 import earthImage from '../assets/imgs/earth.jpg';
-import earthBumpImage from '../assets/imgs/earth-bump.png';
+import earthBumpImage from '../assets/imgs/clouds.png';
 import cloudsImage from '../assets/imgs/clouds.png';
 
 const MAP_CENTER = { lat: 10, lng: 0, altitude: 2 };

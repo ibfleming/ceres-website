@@ -19,7 +19,7 @@ function App() {
 			const navHeight = navElement.clientHeight;
 			if (parentHeight > navHeight + window.scrollY) {
 				navElement.classList.add('nav-animation');
-				setScrollY(window.scrollY);
+				setScrollY(window.scrollY / 1.1);
 			}
 		};
 
