@@ -51,7 +51,7 @@ function App() {
 	return (
 		<div className='app-container'>
 			<section className='w-full h-8 bg-black'></section>
-			<Globe />
+			<Globe currentView={currentView} />
 			<section className='w-full h-16 spacer-gradient-bottom'></section>
 			<div
 				id='nav-parent'
