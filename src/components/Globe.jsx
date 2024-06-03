@@ -1,39 +1,22 @@
 import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import Globe from 'react-globe.gl';
-import earthImage from '../assets/imgs/earth.jpg';
-import earthBumpImage from '../assets/imgs/clouds.png';
-import cloudsImage from '../assets/imgs/clouds.png';
-// import * as THREE from 'three';
+import earthImage from '../assets/imgs/earth-blue-marble.jpg';
+import earthBumpImage from '../assets/imgs/earth-topology.png';
+import earthSpecular from '../assets/imgs/earth-water.png';
+import AirplaneModel from '../assets/models/boeing.glb';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import * as THREE from 'three';
 
-const MAP_CENTER = { lat: 20, lng: -75, altitude: 2 };
+//const MAP_CENTER = { lat: 15, lng: -60, altitude: 2 };
+const MAP_CENTER = { lat: 7.5, lng: 0, altitude: 2 };
 
-const World = ({ currentView }) => {
+const World = () => {
 	const globeRef = useRef();
+	const airplane = useRef();
+	const globe = useRef();
+	const orbitAngle = useRef(0);
 
-	const initializeGlobe = () => {
-		if (globeRef.current.initialized) return;
-		const globe = globeRef.current;
-		if (!globe) return;
-
-		// Controls
-		const controls = globe.controls();
-		controls.enableRotate = true;
-		controls.autoRotate = true;
-		controls.autoRotateSpeed = 0.35;
-		controls.enableZoom = false;
-		controls.enablePan = false;
-
-		// Perspective
-		globe.pointOfView(MAP_CENTER, 0);
-
-		// Renderer
-		const renderer = globe.renderer();
-		renderer.setPixelRatio(1);
-		renderer.shadowMap.enabled = false;
-		renderer.antialias = false;
-
-		/* Clouds [Optional]
+	/* Clouds [Optional]
 		const CLOUDS_IMG = cloudsImage;
 		const CLOUDS_ALT = 0.01;
 
@@ -55,117 +38,108 @@ const World = ({ currentView }) => {
 		});
 		*/
 
-		globeRef.current.initialized = true;
-	};
+	const globeMaterial = new THREE.MeshPhongMaterial();
+	globeMaterial.bumpScale = 10;
+	new THREE.TextureLoader().load(earthSpecular, (texture) => {
+		globeMaterial.specularMap = texture;
+		globeMaterial.specular = new THREE.Color('grey');
+		globeMaterial.shininess = 15;
+	});
 
 	useEffect(() => {
+		const initializeGlobe = () => {
+			console.log('Init Globe!');
+
+			globe.current = globeRef.current;
+
+			// Controls
+			const controls = globe.current.controls();
+			controls.enableRotate = true;
+			controls.autoRotate = true;
+			controls.autoRotateSpeed = 0.5;
+			controls.enableZoom = false;
+			controls.enablePan = false;
+
+			// Perspective
+			globe.current.pointOfView(MAP_CENTER, 0);
+
+			// Renderer
+			const renderer = globe.current.renderer();
+			renderer.setPixelRatio(1);
+			renderer.shadowMap.enabled = true;
+			renderer.antialias = true;
+
+			// Model
+			const loader = new GLTFLoader();
+			loader.load(
+				AirplaneModel,
+				(glb) => {
+					console.log('Model loaded:', glb);
+					airplane.current = glb.scene;
+					airplane.current.scale.set(8, 8, 8);
+
+					// Change material
+					airplane.current.traverse((node) => {
+						if (node.isMesh) {
+							node.material = new THREE.MeshPhongMaterial({
+								color: 0xffffff,
+								specular: 0x222222,
+								shininess: 80,
+							});
+							node.material.needsUpdate = true;
+						}
+					});
+
+					globe.current.scene().add(airplane.current);
+				},
+				undefined,
+				(error) => {
+					console.error(error);
+				}
+			);
+
+			// Lighting
+			const directionalLight = globeRef.current
+				.lights()
+				.find((obj3d) => obj3d.type === 'DirectionalLight');
+			directionalLight && directionalLight.position.set(1, 1, 1);
+		};
+
+		const orbit = () => {
+			if (airplane.current && globe.current) {
+				const radius = globe.current.getGlobeRadius() * 1.15; // Orbit radius
+				const speed = 0.001; // Orbit speed
+				orbitAngle.current += speed; // Increment the angle
+				const x = radius * Math.cos(orbitAngle.current);
+				const z = radius * Math.sin(orbitAngle.current);
+				airplane.current.position.set(x, 0, z); // Set airplane position
+				airplane.current.lookAt(new THREE.Vector3(0, 0, 0)); // Orient airplane towards the globe
+			}
+			requestAnimationFrame(orbit); // Loop the animation
+		};
+
 		initializeGlobe();
+		orbit();
 	}, []);
-
-	function getRandomAltitude() {
-		const min = 0.075;
-		const max = 0.2;
-		return Math.random() * (max - min) + min;
-	}
-
-	const pointsData =
-		currentView === 'Contact'
-			? [
-					{
-						lat: 44.240459,
-						lng: -114.478828,
-						color: '#FFA500',
-						altitude: getRandomAltitude(),
-					}, // Idaho
-					{
-						lat: 36.116203,
-						lng: -119.681564,
-						color: '#FFB6C1',
-						altitude: getRandomAltitude(),
-					}, // California
-					{
-						lat: 33.729759,
-						lng: -111.431221,
-						color: '#E0FFFF',
-						altitude: getRandomAltitude(),
-					}, // Arizona
-					{
-						lat: 38.313515,
-						lng: -117.055374,
-						color: '#FFFF00',
-						altitude: getRandomAltitude(),
-					}, // Nevada
-					{
-						lat: 44.572021,
-						lng: -122.070938,
-						color: '#9400D3',
-						altitude: getRandomAltitude(),
-					}, // Oregon
-					{
-						lat: 40.150032,
-						lng: -111.862434,
-						color: '#ADFF2F',
-						altitude: getRandomAltitude(),
-					}, // Utah
-					{
-						lat: 47.400902,
-						lng: -121.490494,
-						color: '#FF7F50',
-						altitude: getRandomAltitude(),
-					}, // Washington
-					{
-						lat: 46.921925,
-						lng: -110.454353,
-						color: '#32CD32',
-						altitude: getRandomAltitude(),
-					}, // Montana
-					{
-						lat: 42.755966,
-						lng: -107.302491,
-						color: '#5F9EA0',
-						altitude: getRandomAltitude(),
-					}, // Wyoming
-					{
-						lat: 34.840515,
-						lng: -106.248482,
-						color: '#800080',
-						altitude: getRandomAltitude(),
-					}, // New Mexico
-					{
-						lat: 39.059811,
-						lng: -105.311104,
-						color: '#DB7093',
-						altitude: getRandomAltitude(),
-					}, // Colorado
-			  ]
-			: [];
 
 	return (
 		<div className='logo'>
 			<div className='flex relative w-fit'>
 				<Globe
 					ref={globeRef}
-					onGlobeReady={initializeGlobe}
-					width={250}
-					height={250}
+					globeMaterial={globeMaterial}
+					width={256}
+					height={256}
 					// Images
 					globeImageUrl={earthImage}
 					bumpImageUrl={earthBumpImage}
-					cloudsImage={cloudsImage}
 					backgroundColor='rgba(0,0,0,0)'
 					showAtmosphere={true}
 					atmosphereColor='rgb(207, 222, 231)'
 					enableGlobeGlow={false}
 					enableBackground={false}
-					enableClouds={true}
-					animateIn={true}
-					// Points
-					pointsData={pointsData}
-					pointLat='lat'
-					pointLng='lng'
-					pointColor='color'
-					pointAltitude='altitude'
-					pointRadius={0.33}
+					enableClouds={false}
+					animateIn={false}
 					enablePointerInteraction={false}
 				/>
 			</div>
@@ -186,10 +160,6 @@ const World = ({ currentView }) => {
 			</div>
 		</div>
 	);
-};
-
-World.propTypes = {
-	currentView: PropTypes.string.isRequired,
 };
 
 export default World;
