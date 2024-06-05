@@ -124,7 +124,7 @@ const World = () => {
 
 	return (
 		<div className='logo'>
-			<div className='flex relative w-fit'>
+			<div className='flex relative w-fit hover:cursor-pointer'>
 				<Globe
 					ref={globeRef}
 					globeMaterial={globeMaterial}
@@ -136,7 +136,7 @@ const World = () => {
 					backgroundColor='rgba(0,0,0,0)'
 					showAtmosphere={true}
 					atmosphereColor='rgb(207, 222, 231)'
-					enableGlobeGlow={false}
+					enableGlobeGlow={true}
 					enableBackground={false}
 					enableClouds={false}
 					animateIn={false}
