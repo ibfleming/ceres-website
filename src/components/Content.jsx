@@ -21,51 +21,61 @@ export default function Content() {
 					</svg>
 					<div className='text-xl font-[600] ml-3'>Contact</div>
 				</div>
-				<span className='text-2xl font-bold ml-6'>1-800-258-1490</span>
+				<span className='text-2xl font-bold ml-6 underline underline-offset-4'>
+					1-800-258-1490
+				</span>
 			</section>
-			<section className='w-2/3 mx-auto'>
-				<h1 className='text-2xl font-bold'>
-					Phase 1 Environmental Site Assessment Service
-				</h1>
-				<p>
-					To reduce the risk of environmental liability, a Phase I ESA is
-					conducted prior to real property financial transactions. It is
-					very important for the client to understand the experience and
-					knowledge of the consultant, as well as what can be expected to
-					be found within the context of the proposed scope of work. All
-					CERES Phase I ESAs are conducted under the direction of a
-					Registered Environmental Property Assessor (REPA).
-				</p>
-				<p>
-					CERES&apos; Phase I ESAs are designed to follow Standard
-					E1527-21, set forth by the American Society for Testing and
-					Materials (ASTM). CERES can expand the scope of this Standard if
-					desired, or comply with specific institutional standards
-				</p>
-			</section>
-			<section className='w-2/3 mx-auto'>
-				<h1 className='text-2xl font-bold'>
-					The best does not have to be expensive.
-				</h1>
-				<p>
-					CERES’ goal is to provide clients with honest, timely,
-					cost-effective consulting services . We are committed to
-					furnishing our clients with an atmosphere of confidence and
-					reliability, while maintaining a high level of technical
-					competence.
-				</p>
-				<p>
-					CERES is a full-service environmental consulting company. With
-					General, Professional, and Pollution Liability insurance of
-					$1,000,000, CERES provides services in the western United States
-					for an ever-growing client base.
-				</p>
-				<p>
-					CERES utilizes a mix of dedicated environmental, technical, and
-					administrative professionals who approach project management with
-					energy, skill, and experience.
-				</p>
-			</section>
+			<div className='container'>
+				<section className='flex flex-col justify-center items-center'>
+					<h1 className='text-2xl font-semibold w-fit h-fit text-secondary bg-primary rounded-md px-4 py-2 drop-shadow-xl mb-8'>
+						Phase 1 Environmental Site Assessment Service
+					</h1>
+					<div className='p-8 mx-16 text-lg font-light'>
+						<p className='pb-8'>
+							To reduce the risk of environmental liability, a Phase I
+							ESA is conducted prior to real property financial
+							transactions. It is very important for the client to
+							understand the experience and knowledge of the consultant,
+							as well as what can be expected to be found within the
+							context of the proposed scope of work. All CERES Phase I
+							ESAs are conducted under the direction of a Registered
+							Environmental Property Assessor (REPA).
+						</p>
+						<p>
+							CERES&apos; Phase I ESAs are designed to follow Standard
+							E1527-21, set forth by the American Society for Testing and
+							Materials (ASTM). CERES can expand the scope of this
+							Standard if desired, or comply with specific institutional
+							standards
+						</p>
+					</div>
+				</section>
+				<section className='flex flex-col justify-center items-center'>
+					<h1 className='my-8 text-2xl font-semibold w-fit h-fit text-secondary bg-primary rounded-md px-4 py-2 drop-shadow-xl'>
+						The best does not have to be expensive
+					</h1>
+					<div className='px-8 pt-8 mx-16 text-lg font-light'>
+						<p className='pb-8'>
+							CERES’ goal is to provide clients with honest, timely,
+							cost-effective consulting services . We are committed to
+							furnishing our clients with an atmosphere of confidence and
+							reliability, while maintaining a high level of technical
+							competence.
+						</p>
+						<p className='pb-8'>
+							CERES is a full-service environmental consulting company.
+							With General, Professional, and Pollution Liability
+							insurance of $1,000,000, CERES provides services in the
+							western United States for an ever-growing client base.
+						</p>
+						<p>
+							CERES utilizes a mix of dedicated environmental, technical,
+							and administrative professionals who approach project
+							management with energy, skill, and experience.
+						</p>
+					</div>
+				</section>
+			</div>
 		</div>
 	);
 }
