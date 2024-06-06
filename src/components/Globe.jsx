@@ -7,7 +7,6 @@ import AirplaneModel from '../assets/models/boeing.glb';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
-//const MAP_CENTER = { lat: 15, lng: -60, altitude: 2 };
 const MAP_CENTER = { lat: 7.5, lng: 0, altitude: 2 };
 
 const World = () => {
@@ -15,28 +14,6 @@ const World = () => {
 	const airplane = useRef();
 	const globe = useRef();
 	const orbitAngle = useRef(0);
-
-	/* Clouds [Optional]
-		const CLOUDS_IMG = cloudsImage;
-		const CLOUDS_ALT = 0.01;
-
-		const textureLoader = new THREE.TextureLoader();
-		textureLoader.load(CLOUDS_IMG, (cloudsTexture) => {
-			const cloudsMaterial = new THREE.MeshPhongMaterial({
-				map: cloudsTexture,
-				transparent: true,
-				opacity: 0.1,
-				depthWrite: false,
-			});
-			const cloudsGeometry = new THREE.SphereGeometry(
-				globe.getGlobeRadius() * (1 + CLOUDS_ALT),
-				32,
-				32
-			);
-			const clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
-			globe.scene().add(clouds);
-		});
-		*/
 
 	const globeMaterial = new THREE.MeshPhongMaterial();
 	globeMaterial.bumpScale = 10;
@@ -108,7 +85,7 @@ const World = () => {
 		const orbit = () => {
 			if (airplane.current && globe.current) {
 				const radius = globe.current.getGlobeRadius() * 1.15; // Orbit radius
-				const speed = 0.0025; // Orbit speed
+				const speed = 0.003; // Orbit speed
 				orbitAngle.current += speed; // Increment the angle
 				const x = radius * Math.cos(orbitAngle.current);
 				const z = radius * Math.sin(orbitAngle.current);
