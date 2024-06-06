@@ -76,7 +76,7 @@ const World = () => {
 				(glb) => {
 					console.log('Model loaded:', glb);
 					airplane.current = glb.scene;
-					airplane.current.scale.set(8, 8, 8);
+					airplane.current.scale.set(16, 16, 10);
 
 					// Change material
 					airplane.current.traverse((node) => {
@@ -108,7 +108,7 @@ const World = () => {
 		const orbit = () => {
 			if (airplane.current && globe.current) {
 				const radius = globe.current.getGlobeRadius() * 1.15; // Orbit radius
-				const speed = 0.001; // Orbit speed
+				const speed = 0.0025; // Orbit speed
 				orbitAngle.current += speed; // Increment the angle
 				const x = radius * Math.cos(orbitAngle.current);
 				const z = radius * Math.sin(orbitAngle.current);
@@ -128,8 +128,8 @@ const World = () => {
 				<Globe
 					ref={globeRef}
 					globeMaterial={globeMaterial}
-					width={256}
-					height={256}
+					width={384}
+					height={384}
 					// Images
 					globeImageUrl={earthImage}
 					bumpImageUrl={earthBumpImage}

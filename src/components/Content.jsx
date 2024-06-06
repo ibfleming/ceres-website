@@ -5,7 +5,7 @@ export default function Content() {
 				<h1 className='text-3xl font-bold'>
 					Phase 1 Environmental Site Assessment
 				</h1>
-				<span className='block mt-4 w-fit h-fit text-secondary text-lg font-semibold bg-primary rounded-md px-4 py-0.5 drop-shadow-xl'>
+				<span className='block mx-auto w-fit h-fit text-secondary text-lg font-semibold bg-primary rounded-md px-4 py-0.5 drop-shadow-xl mt-3'>
 					ASTM E1527-21
 				</span>
 			</section>
@@ -66,11 +66,11 @@ export default function Content() {
 							CERES is a full-service environmental consulting company.
 							With General, Professional, and Pollution Liability
 							insurance of $1,000,000, CERES provides services in the
-							western United States for an ever-growing client base.
+							western United States.
 						</p>
 						<p>
-							CERES utilizes a mix of dedicated environmental, technical,
-							and administrative professionals who approach project
+							CERES utilizes dedicated environmental, technical, and
+							administrative professionals who approach project
 							management with energy, skill, and experience.
 						</p>
 					</div>
