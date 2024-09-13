@@ -1,3 +1,9 @@
+import Header from "@/header";
+
 export default function HomePage() {
-  return <main>Hello, World!</main>;
+  return (
+    <main>
+      <Header />
+    </main>
+  );
 }
