@@ -1,10 +1,10 @@
 import Image from "next/image";
 import StarsImage from "public/stars-2k.webp";
-import Globe from "@/globe";
+import GlobeComponent from "./globe";
 
 export default function Header() {
   return (
-    <header className="relative h-80 max-h-96 min-h-80 w-full">
+    <header className="header">
       <Image
         src={StarsImage}
         alt="Stars"
@@ -12,9 +12,11 @@ export default function Header() {
         aria-hidden
         aria-disabled
       />
-      <div className="relative z-10 flex h-full items-center justify-center text-background">
-        <Globe />
-        <CeresLogo />
+      <div className="container">
+        <GlobeComponent />
+        {/*         <GlobeComponent>
+          <CeresLogo />
+        </GlobeComponent> */}
       </div>
     </header>
   );
@@ -22,12 +24,12 @@ export default function Header() {
 
 const CeresLogo = () => {
   return (
-    <div className="flex flex-col items-center gap-0.5">
-      <div className="logo italic">
+    <div className="logo">
+      <div className="title">
         <h1 className="font-sofachroma text-5xl uppercase">Ceres</h1>
-        <h2 className="font-sofachroma text-xl uppercase">Corp</h2>
+        <h2 className="font-sofachroma text-xl uppercase">Corp.</h2>
       </div>
-      <h3 className="text-xs">
+      <h3 className="description">
         Professional, Cost-effective Environmental Services
       </h3>
     </div>

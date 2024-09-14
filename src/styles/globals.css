@@ -69,7 +69,19 @@
 }
 
 @layer components {
+  .header {
+    @apply relative max-h-fit min-h-80 w-full max-sm:h-full;
+  }
+  .container {
+    @apply relative z-10 mx-auto flex w-fit items-center justify-center text-background max-sm:flex-col;
+  }
   .logo {
-    @apply flex justify-center max-sm:flex-col max-sm:items-center sm:items-end sm:gap-2;
+    @apply flex flex-col items-center gap-1.5 duration-700 animate-in fade-in zoom-in max-sm:pb-12;
+  }
+  .title {
+    @apply flex justify-center italic max-md:flex-col max-md:items-center md:items-end md:gap-2;
+  }
+  .description {
+    @apply text-center text-xs max-md:w-4/5;
   }
 }
