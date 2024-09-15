@@ -70,13 +70,13 @@
 
 @layer components {
   .header {
-    @apply relative max-h-fit min-h-80 w-full max-sm:h-full;
+    @apply relative max-h-fit min-h-[384px] w-full max-sm:h-full;
   }
   .container {
-    @apply relative z-10 mx-auto flex w-fit items-center justify-center text-background max-sm:flex-col;
+    @apply relative z-10 mx-auto flex w-fit items-center justify-center max-sm:flex-col;
   }
   .logo {
-    @apply flex flex-col items-center gap-1.5 duration-700 animate-in fade-in zoom-in max-sm:pb-12;
+    @apply flex flex-col items-center gap-1.5 text-white duration-700 animate-in fade-in zoom-in max-sm:pb-12;
   }
   .title {
     @apply flex justify-center italic max-md:flex-col max-md:items-center md:items-end md:gap-2;

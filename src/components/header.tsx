@@ -1,6 +1,8 @@
 import Image from "next/image";
 import StarsImage from "public/stars-2k.webp";
+import React from "react";
 import GlobeComponent from "./globe";
+import { ThemeToggle } from "./theme-toggle";
 
 export default function Header() {
   return (
@@ -12,11 +14,11 @@ export default function Header() {
         aria-hidden
         aria-disabled
       />
+      <ThemeToggle />
       <div className="container">
-        <GlobeComponent />
-        {/*         <GlobeComponent>
+        <GlobeComponent>
           <CeresLogo />
-        </GlobeComponent> */}
+        </GlobeComponent>
       </div>
     </header>
   );
