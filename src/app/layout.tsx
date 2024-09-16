@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${sofachroma.variable}`}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           {children}
         </ThemeProvider>
       </body>

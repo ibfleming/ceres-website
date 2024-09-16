@@ -3,14 +3,9 @@
 import { useTheme } from "next-themes";
 import { Button } from "~/components/ui/button";
 import { Sun, Moon } from "lucide-react";
-import { useEffect } from "react";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
 
   return (
     <Button

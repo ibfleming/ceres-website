@@ -28,8 +28,12 @@ const CeresLogo = () => {
   return (
     <div className="logo">
       <div className="title">
-        <h1 className="font-sofachroma text-5xl uppercase">Ceres</h1>
-        <h2 className="font-sofachroma text-xl uppercase">Corp.</h2>
+        <h1 className="font-sofachroma text-6xl uppercase max-sm:text-5xl">
+          Ceres
+        </h1>
+        <h2 className="pb-[1px] font-sofachroma text-2xl uppercase max-sm:text-xl">
+          Corp.
+        </h2>
       </div>
       <h3 className="description">
         Professional, Cost-effective Environmental Services
