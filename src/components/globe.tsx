@@ -10,9 +10,6 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import EarthTexture from "/public/earth-texture.webp";
 import EarthBump from "/public/earth-bump.webp";
 import EarthWater from "/public/earth-water.webp";
-import { getDefaultConfig } from "tailwind-merge";
-import { SceneNode } from "three/webgpu";
-import animate from "tailwindcss-animate";
 
 export default function GlobeComponent({
   children,
@@ -63,6 +60,35 @@ export default function GlobeComponent({
     });
   }
 
+  const orbitAirplane = (
+    globe: GlobeMethods | undefined,
+    airplane: GLTF | undefined | null,
+  ) => {
+    if (globe && airplane) {
+      //const originalPos = airplane.scene.getWorldPosition(new THREE.Vector3());
+      //console.log("Original Position:", originalPos);
+      //airplane.scene.position.setX(0).setY(0).setZ(0);
+      const radius = globe.getGlobeRadius();
+      const planeDistFromOrigin = radius * 1.1;
+      const orbitSpeed = 0.001;
+
+      const time = Date.now() * orbitSpeed;
+
+      const newY = planeDistFromOrigin * Math.sin(time);
+      const newX = planeDistFromOrigin * Math.cos(time);
+
+      airplane.scene.position.set(newX, newY, 0);
+
+      airplane.scene.up.set(0, 0, 1);
+
+      airplane.scene.lookAt(0, 0, 0);
+
+      airplane.scene.rotateZ(2 * Math.PI);
+      airplane.scene.rotateX((3 * Math.PI) / 2);
+    }
+    requestAnimationFrame(() => orbitAirplane(globe, airplane));
+  };
+
   /* Globe configuration */
 
   const globeConfig: GlobeProps = {
@@ -93,8 +119,12 @@ export default function GlobeComponent({
     /*********/
 
     if (globe) {
+      console.log(
+        "Globe position:",
+        globe.scene().getWorldPosition(new THREE.Vector3()),
+      );
       globe.controls().enableRotate = true;
-      globe.controls().autoRotate = true;
+      globe.controls().autoRotate = false;
       globe.controls().autoRotateSpeed = -1.75;
       globe.controls().enableDamping = true;
       globe.controls().enablePan = false;
@@ -106,26 +136,24 @@ export default function GlobeComponent({
 
     if (globe && airplaneRef.current) {
       const airplane = airplaneRef.current.scene;
-      const radius = globe.getGlobeRadius();
 
       airplane.scale.setX(50).setY(50).setZ(50);
-      airplane
-        .rotateX((5 * Math.PI) / 4) // Math.PI = 180deg
+      /*       airplane
+        .rotateX((5 * Math.PI) / 4) // 5𝛑/4 = 225°
         .rotateY(-Math.PI * 2)
-        .rotateZ(Math.PI / 2);
-      airplane.position
-        .setX(-(radius * 1.1))
-        .setY(0)
-        .setZ(0);
+        .rotateZ(Math.PI / 2); */ //airplane.position.setX(defaultX).setY(0).setZ(0);
+      //airplane.lookAt(0, 0, 0);
+      airplane.position.set(0, globe.getGlobeRadius() * 1.1, 0);
 
       globe.scene().add(airplaneRef.current.scene);
-      console.log("Valid airplane reference!");
     }
 
     /*********/
 
-    console.log("Globe initialized!");
     setGlobeInit(true);
+    orbitAirplane(globeRef.current, airplaneRef.current);
+
+    /*********/
   }
 
   if (typeof window !== "undefined") {
