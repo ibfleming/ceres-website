@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { inter, sofachroma } from "~/lib/fonts";
+import { inter, outfit, sofachroma } from "~/lib/fonts";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
@@ -14,7 +14,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${sofachroma.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${sofachroma.variable} ${outfit.variable}`}
+    >
       <body>
         <ThemeProvider attribute="class" defaultTheme="light">
           {children}

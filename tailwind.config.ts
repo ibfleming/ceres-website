@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         sofachroma: ["var(--font-sofachroma)"],
+        outfit: ["var(--font-outfit)"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -46,6 +47,9 @@ export default {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        ceres: {
+          DEFAULT: "hsl(var(--ceres))",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

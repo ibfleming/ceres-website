@@ -2,10 +2,9 @@
 
 import * as THREE from "three";
 import Globe from "react-globe.gl";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { type GlobeProps, type GlobeMethods } from "react-globe.gl";
 import { type GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import EarthTexture from "/public/earth-texture.webp";
 import EarthBump from "/public/earth-bump.webp";
@@ -33,7 +32,7 @@ export default function GlobeComponent({
           material.specularMap = texture;
           material.specular = new THREE.Color("grey");
           material.shininess = 20;
-          console.log("Loaded globe material.");
+          /* console.log("Loaded globe material."); */
           resolve(setGlobeMaterial(material));
         },
         undefined,
@@ -47,9 +46,10 @@ export default function GlobeComponent({
   function loadAirplaneModel(): Promise<GLTF | null> {
     return new Promise((resolve, reject) => {
       new GLTFLoader().load(
-        "/boeing-v2.glb",
+        "/boeing.glb",
         (gltf) => {
-          console.log("Loaded airplane model.");
+          /* console.log("Loaded airplane model."); */
+          gltf.scene.visible = false;
           resolve(gltf);
         },
         undefined,
@@ -65,12 +65,9 @@ export default function GlobeComponent({
     airplane: GLTF | undefined | null,
   ) => {
     if (globe && airplane) {
-      //const originalPos = airplane.scene.getWorldPosition(new THREE.Vector3());
-      //console.log("Original Position:", originalPos);
-      //airplane.scene.position.setX(0).setY(0).setZ(0);
       const radius = globe.getGlobeRadius();
-      const planeDistFromOrigin = radius * 1.1;
-      const orbitSpeed = 0.001;
+      const planeDistFromOrigin = radius * 1.125;
+      const orbitSpeed = 75 / 100000; // Change the 75 to adjust the speed
 
       const time = Date.now() * orbitSpeed;
 
@@ -78,101 +75,85 @@ export default function GlobeComponent({
       const newX = planeDistFromOrigin * Math.cos(time);
 
       airplane.scene.position.set(newX, newY, 0);
-
       airplane.scene.up.set(0, 0, 1);
-
       airplane.scene.lookAt(0, 0, 0);
-
-      airplane.scene.rotateZ(2 * Math.PI);
       airplane.scene.rotateX((3 * Math.PI) / 2);
+      airplane.scene.rotateZ(2 * Math.PI);
     }
     requestAnimationFrame(() => orbitAirplane(globe, airplane));
   };
 
-  /* Globe configuration */
+  /* GLOBE CONFIGURATION */
 
   const globeConfig: GlobeProps = {
     width: 360,
     height: 360,
     backgroundColor: "rgba(0, 0, 0, 0)",
+    globeMaterial: globeMaterial,
     waitForGlobeReady: true,
     animateIn: true,
     globeImageUrl: EarthTexture.src,
     bumpImageUrl: EarthBump.src,
-    showGraticules: false,
-    showAtmosphere: false,
     atmosphereColor: "white",
     atmosphereAltitude: 0.085,
-    globeMaterial: globeMaterial,
     rendererConfig: { antialias: true, alpha: true },
     enablePointerInteraction: false,
-    showGlobe: false,
   };
 
   function initGlobe() {
     const globe = globeRef.current;
+    const airplane = airplaneRef.current;
 
-    if (!globe) {
+    /*     if (!globe) {
       new Error("Globe not initialized!");
-    }
-
-    /*********/
+    } */
 
     if (globe) {
-      console.log(
-        "Globe position:",
-        globe.scene().getWorldPosition(new THREE.Vector3()),
-      );
       globe.controls().enableRotate = true;
-      globe.controls().autoRotate = false;
-      globe.controls().autoRotateSpeed = -1.75;
+      globe.controls().autoRotate = true;
+      globe.controls().autoRotateSpeed = -1.75; // Going backwards
       globe.controls().enableDamping = true;
       globe.controls().enablePan = false;
       globe.controls().enableZoom = false;
-      globe.pointOfView({ lat: 5, lng: -90, altitude: 2 });
+      globe.pointOfView({ lat: 5, lng: -100, altitude: 2 });
     }
 
-    /*********/
-
-    if (globe && airplaneRef.current) {
-      const airplane = airplaneRef.current.scene;
-
-      airplane.scale.setX(50).setY(50).setZ(50);
-      /*       airplane
-        .rotateX((5 * Math.PI) / 4) // 5𝛑/4 = 225°
-        .rotateY(-Math.PI * 2)
-        .rotateZ(Math.PI / 2); */ //airplane.position.setX(defaultX).setY(0).setZ(0);
-      //airplane.lookAt(0, 0, 0);
-      airplane.position.set(0, globe.getGlobeRadius() * 1.1, 0);
-
-      globe.scene().add(airplaneRef.current.scene);
+    if (globe && airplane) {
+      airplane.scene.scale.setX(50).setY(50).setZ(50);
+      globe.scene().add(airplane.scene);
+      airplane.scene.visible = true;
     }
-
-    /*********/
 
     setGlobeInit(true);
     orbitAirplane(globeRef.current, airplaneRef.current);
-
-    /*********/
   }
 
   if (typeof window !== "undefined") {
     return (
       <>
-        <Globe
-          ref={globeRef}
-          {...globeConfig}
-          showGlobe={isGlobeInit}
-          onGlobeReady={async () => {
-            airplaneRef.current = await loadAirplaneModel();
-            await createGlobeMaterial(globeMaterial);
-            initGlobe();
-          }}
-        />
+        <span className="cursor-move">
+          <Globe
+            ref={globeRef}
+            {...globeConfig}
+            showAtmosphere={isGlobeInit}
+            showGraticules={isGlobeInit}
+            showGlobe={isGlobeInit}
+            onGlobeReady={async () => {
+              airplaneRef.current = await loadAirplaneModel();
+              await createGlobeMaterial(globeMaterial);
+              initGlobe();
+            }}
+          />
+        </span>
+
         {isGlobeInit && children}
       </>
     );
   } else {
-    return <div />;
+    return (
+      <span className="cursor-move">
+        <div />
+      </span>
+    );
   }
 }
