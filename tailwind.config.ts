@@ -11,6 +11,7 @@ export default {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         sofachroma: ["var(--font-sofachroma)"],
         outfit: ["var(--font-outfit)"],
+        chivo: ["var(--font-chivo)"],
       },
       borderRadius: {
         lg: "var(--radius)",

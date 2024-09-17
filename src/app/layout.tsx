@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { inter, outfit, sofachroma } from "~/lib/fonts";
+import { inter, outfit, sofachroma, chivo } from "~/lib/fonts";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sofachroma.variable} ${outfit.variable}`}
+      className={`${inter.variable} ${sofachroma.variable} ${outfit.variable} ${chivo.variable}`}
     >
       <body>
         <ThemeProvider attribute="class" defaultTheme="light">

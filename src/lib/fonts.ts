@@ -1,4 +1,4 @@
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Chivo_Mono } from "next/font/google";
 import localFont from "next/font/local";
 
 const inter = Inter({
@@ -10,6 +10,12 @@ const inter = Inter({
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+const chivo = Chivo_Mono({
+  subsets: ["latin"],
+  variable: "--font-chivo",
   display: "swap",
 });
 
@@ -30,4 +36,4 @@ const sofachroma = localFont({
   display: "swap",
 });
 
-export { inter, sofachroma, outfit };
+export { inter, sofachroma, outfit, chivo };

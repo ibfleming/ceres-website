@@ -71,7 +71,10 @@
 
 @layer components {
   .header {
-    @apply relative max-h-fit min-h-[360px] w-full max-[970px]:h-full;
+    @apply relative max-h-fit min-h-[360px] w-full;
+    .responsive {
+      @apply max-[970px]:h-full;
+    }
   }
   .container {
     @apply relative z-10 mx-auto flex w-fit items-center justify-center gap-4 max-[970px]:flex-col max-[970px]:gap-2;
@@ -85,4 +88,11 @@
   .description {
     @apply text-center text-sm max-sm:w-3/4 max-sm:text-xs;
   }
+}
+
+.lucide {
+  stroke-width: 4px;
+}
+.lucide * {
+  vector-effect: non-scaling-stroke;
 }
