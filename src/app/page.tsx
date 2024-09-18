@@ -1,5 +1,7 @@
 import Header from "@/header";
 import { Phone } from "lucide-react";
+import Loader from "~/components/loader";
+import PhoneNumber from "~/components/phone";
 
 export default function HomePage() {
   return (
@@ -16,11 +18,9 @@ export default function HomePage() {
             </h2>
           </div>
         </section>
-        <section className="flex items-center justify-center gap-3 px-16 pb-16 align-middle animate-in fade-in zoom-in max-md:gap-3 max-sm:gap-2">
-          <Phone className="h-10 w-10 text-ceres max-md:h-10 max-md:w-10 max-sm:h-8 max-sm:w-8 lg:h-16 lg:w-16 lg:gap-6" />
-          <h1 className="text-2xl font-semibold text-ceres sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl">
-            1-800-258-1490
-          </h1>
+        <section className="flex items-center justify-center gap-6 px-16 pb-16 align-middle animate-in fade-in zoom-in max-md:gap-3 max-sm:gap-2">
+          <Phone className="icon-normal h-10 w-10 text-ceres max-md:h-10 max-md:w-10 max-sm:h-8 max-sm:w-8 lg:h-16 lg:w-16 lg:gap-6" />
+          <PhoneNumber />
         </section>
       </div>
     </main>

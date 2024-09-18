@@ -2,13 +2,20 @@ import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { inter, outfit, sofachroma, chivo } from "~/lib/fonts";
-import { ThemeProvider } from "next-themes";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Ceres (dev)",
   description: "Ceres website, version 2",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
+
+const ThemeProvider = dynamic(
+  () => import("next-themes").then((mod) => mod.ThemeProvider),
+  {
+    ssr: false,
+  },
+);
 
 export default function RootLayout({
   children,
@@ -19,7 +26,7 @@ export default function RootLayout({
       className={`${inter.variable} ${sofachroma.variable} ${outfit.variable} ${chivo.variable}`}
     >
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           {children}
         </ThemeProvider>
       </body>

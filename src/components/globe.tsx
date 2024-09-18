@@ -9,6 +9,7 @@ import { type GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import EarthTexture from "/public/earth-texture.webp";
 import EarthBump from "/public/earth-bump.webp";
 import EarthWater from "/public/earth-water.webp";
+import Loader from "./loader";
 
 export default function GlobeComponent({
   children,
@@ -151,8 +152,10 @@ export default function GlobeComponent({
     );
   } else {
     return (
-      <span className="cursor-move">
-        <div />
+      <span>
+        <div>
+          <Loader />
+        </div>
       </span>
     );
   }
