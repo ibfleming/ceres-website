@@ -6,8 +6,7 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
-  distDir: undefined,
-  output: undefined, // "export" = static html
+  output: "export",
 };
 
 export default config;

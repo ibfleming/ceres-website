@@ -13,7 +13,7 @@ export default function Footer() {
         aria-hidden
         aria-disabled
       />
-      <div className="relative z-10 flex h-full items-center justify-center">
+      <div className="relative z-10 flex h-full items-center justify-center px-8 max-sm:text-center">
         <h1 className="font-rubik text-sm text-white">
           © Ceres, Corp. 2024 -- Website created by{" "}
           <Link
