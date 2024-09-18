@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { inter, outfit, sofachroma, chivo } from "~/lib/fonts";
+import { inter, outfit, sofachroma, rubik } from "~/lib/fonts";
 import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sofachroma.variable} ${outfit.variable} ${chivo.variable}`}
+      className={`${inter.variable} ${sofachroma.variable} ${outfit.variable} ${rubik.variable}`}
     >
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>

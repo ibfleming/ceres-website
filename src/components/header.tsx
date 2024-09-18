@@ -15,7 +15,7 @@ export default function Header() {
         aria-disabled
       />
       <ThemeToggle />
-      <div className="container">
+      <div className="wrapper">
         <GlobeComponent>
           <CeresLogo />
         </GlobeComponent>
