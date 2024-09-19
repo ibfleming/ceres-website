@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import StarsImage from "public/stars-2k.webp";
+import StarsImage from "../../public/stars-2k.webp";
 
 export default function Footer() {
   return (
@@ -10,6 +10,7 @@ export default function Footer() {
         src={StarsImage}
         alt="Stars"
         className="absolute z-0 h-full w-full bg-center object-cover object-center"
+        unoptimized={true}
         aria-hidden
         aria-disabled
       />

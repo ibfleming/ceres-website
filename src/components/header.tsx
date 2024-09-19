@@ -11,6 +11,7 @@ export default function Header() {
         src={StarsImage}
         alt="Stars"
         className="absolute z-0 h-full w-full bg-center object-cover object-center"
+        unoptimized={true}
         aria-hidden
         aria-disabled
       />
