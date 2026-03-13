@@ -1,8 +1,8 @@
 import "~/styles/globals.css";
 
-import dynamic from "next/dynamic";
 import { type Metadata } from "next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ThemeProvider } from "next-themes";
 import { inter, outfit, sofachroma, rubik } from "~/lib/fonts";
 
 export const metadata: Metadata = {
@@ -30,19 +30,13 @@ export const metadata: Metadata = {
   },
 };
 
-const ThemeProvider = dynamic(
-  () => import("next-themes").then((mod) => mod.ThemeProvider),
-  {
-    ssr: false,
-  },
-);
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${sofachroma.variable} ${outfit.variable} ${rubik.variable}`}
     >
       <body>

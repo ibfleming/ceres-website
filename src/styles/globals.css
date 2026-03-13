@@ -1,6 +1,103 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sofachroma: var(--font-sofachroma);
+  --font-outfit: var(--font-outfit);
+  --font-rubik: var(--font-rubik);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-ceres: hsl(var(--ceres));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility header {
+  @apply relative max-h-fit min-h-[360px] w-full max-[970px]:h-full;
+}
+
+@utility wrapper {
+  @apply relative z-10 mx-auto flex w-fit items-center justify-center gap-4 max-[970px]:flex-col max-[970px]:gap-2;
+}
+
+@utility logo {
+  @apply flex flex-col items-center gap-1.5 text-white duration-700 animate-in fade-in zoom-in max-[970px]:pb-12;
+}
+
+@utility title {
+  @apply flex flex-row items-end justify-center gap-2.5 italic max-sm:flex-col max-sm:items-center max-sm:gap-0;
+}
+
+@utility description {
+  @apply text-center text-sm max-sm:w-3/4 max-sm:text-xs;
+}
+
+@utility icon-normal {
+  stroke-width: 4px;
+}
+
+@utility icon-thin {
+  stroke-width: 2px;
+}
 
 @layer base {
   :root {
@@ -69,46 +166,20 @@
   }
 }
 
-@layer components {
-  .header {
-    @apply relative max-h-fit min-h-[360px] w-full max-[970px]:h-full;
-  }
-  .wrapper {
-    @apply relative z-10 mx-auto flex w-fit items-center justify-center gap-4 max-[970px]:flex-col max-[970px]:gap-2;
-  }
-  .logo {
-    @apply flex flex-col items-center gap-1.5 text-white duration-700 animate-in fade-in zoom-in max-[970px]:pb-12;
-  }
-  .title {
-    @apply flex flex-row items-end justify-center gap-2.5 italic max-sm:flex-col max-sm:items-center max-sm:gap-0;
-  }
-  .description {
-    @apply text-center text-sm max-sm:w-3/4 max-sm:text-xs;
-  }
-  .icon-normal {
-    stroke-width: 4px;
-  }
-  .icon-thin {
-    stroke-width: 2px;
-  }
-}
-
 .loader {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   display: inline-block;
-  border-top: 3px solid #fff;
-  border-right: 3px solid transparent;
+  border: 3px solid transparent;
+  border-top-color: #fff;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+  animation: rotation 0.8s linear infinite;
+  will-change: transform;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
   }
 }

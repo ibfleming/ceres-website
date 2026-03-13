@@ -6,18 +6,16 @@ import React, { useRef, useState } from "react";
 import { type GlobeProps, type GlobeMethods } from "react-globe.gl";
 import { type GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-import EarthTexture from "/public/earth-texture.webp";
-import EarthBump from "/public/earth-bump.webp";
-import EarthWater from "/public/earth-water.webp";
-import Loader from "./loader";
-
+import EarthTexture from "~/assets/earth-texture.webp";
+import EarthBump from "~/assets/earth-bump.webp";
+import EarthWater from "~/assets/earth-water.webp";
 export default function GlobeComponent({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const globeRef = useRef<GlobeMethods>();
-  const airplaneRef = useRef<GLTF | null>();
+  const globeRef = useRef<GlobeMethods>(null) as React.MutableRefObject<GlobeMethods | undefined>;
+  const airplaneRef = useRef<GLTF | null>(null);
 
   const [isGlobeInit, setGlobeInit] = useState(false);
   const [globeMaterial, setGlobeMaterial] = useState(
@@ -63,7 +61,7 @@ export default function GlobeComponent({
 
   const orbitAirplane = (
     globe: GlobeMethods | undefined,
-    airplane: GLTF | undefined | null,
+    airplane: GLTF | null | undefined,
   ) => {
     if (globe && airplane) {
       const radius = globe.getGlobeRadius();
@@ -129,34 +127,24 @@ export default function GlobeComponent({
     orbitAirplane(globeRef.current, airplaneRef.current);
   }
 
-  if (typeof window !== "undefined") {
-    return (
-      <>
-        <span className="cursor-move">
-          <Globe
-            ref={globeRef}
-            {...globeConfig}
-            showAtmosphere={isGlobeInit}
-            showGraticules={isGlobeInit}
-            showGlobe={isGlobeInit}
-            onGlobeReady={async () => {
-              airplaneRef.current = await loadAirplaneModel();
-              await createGlobeMaterial(globeMaterial);
-              initGlobe();
-            }}
-          />
-        </span>
-
-        {isGlobeInit && children}
-      </>
-    );
-  } else {
-    return (
-      <span>
-        <div>
-          <Loader />
-        </div>
+  return (
+    <>
+      <span className="cursor-move">
+        <Globe
+          ref={globeRef}
+          {...globeConfig}
+          showAtmosphere={isGlobeInit}
+          showGraticules={isGlobeInit}
+          showGlobe={isGlobeInit}
+          onGlobeReady={async () => {
+            airplaneRef.current = await loadAirplaneModel();
+            await createGlobeMaterial(globeMaterial);
+            initGlobe();
+          }}
+        />
       </span>
-    );
-  }
+
+      {isGlobeInit && children}
+    </>
+  );
 }
