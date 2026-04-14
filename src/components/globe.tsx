@@ -1,10 +1,13 @@
 "use client";
 
-import * as THREE from "three";
+import { MeshPhongMaterial, TextureLoader, Color } from "three";
 import Globe from "react-globe.gl";
 import React, { useRef, useState } from "react";
 import { type GlobeProps, type GlobeMethods } from "react-globe.gl";
-import { type GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import {
+  type GLTF,
+  GLTFLoader,
+} from "three/examples/jsm/loaders/GLTFLoader.js";
 
 import EarthTexture from "~/assets/earth-texture.webp";
 import EarthBump from "~/assets/earth-bump.webp";
@@ -20,18 +23,16 @@ export default function GlobeComponent({
   const airplaneRef = useRef<GLTF | null>(null);
 
   const [isGlobeInit, setGlobeInit] = useState(false);
-  const [globeMaterial, setGlobeMaterial] = useState(
-    new THREE.MeshPhongMaterial(),
-  );
+  const [globeMaterial, setGlobeMaterial] = useState(new MeshPhongMaterial());
 
-  function createGlobeMaterial(material: THREE.MeshPhongMaterial) {
+  function createGlobeMaterial(material: MeshPhongMaterial) {
     return new Promise((resolve, reject) => {
-      new THREE.TextureLoader().load(
+      new TextureLoader().load(
         EarthWater.src,
         (texture) => {
           material.bumpScale = 20;
           material.specularMap = texture;
-          material.specular = new THREE.Color("grey");
+          material.specular = new Color("grey");
           material.shininess = 20;
           /* console.log("Loaded globe material."); */
           resolve(setGlobeMaterial(material));
