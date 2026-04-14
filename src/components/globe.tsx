@@ -14,7 +14,9 @@ export default function GlobeComponent({
 }: {
   children: React.ReactNode;
 }) {
-  const globeRef = useRef<GlobeMethods>(null) as React.MutableRefObject<GlobeMethods | undefined>;
+  const globeRef = useRef<GlobeMethods>(null) as React.RefObject<
+    GlobeMethods | undefined
+  >;
   const airplaneRef = useRef<GLTF | null>(null);
 
   const [isGlobeInit, setGlobeInit] = useState(false);
@@ -68,6 +70,7 @@ export default function GlobeComponent({
       const planeDistFromOrigin = radius * 1.125;
       const orbitSpeed = 75 / 100000; // Change the 75 to adjust the speed
 
+      // eslint-disable-next-line react-hooks/purity -- runs inside requestAnimationFrame, not during render
       const time = Date.now() * orbitSpeed;
 
       const newY = planeDistFromOrigin * Math.sin(time);
