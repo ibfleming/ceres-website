@@ -10,6 +10,7 @@ export default function Footer() {
         src={StarsImage}
         alt="Stars"
         className="absolute z-0 h-full w-full bg-center object-cover object-center"
+        priority
         aria-hidden
         aria-disabled
       />
